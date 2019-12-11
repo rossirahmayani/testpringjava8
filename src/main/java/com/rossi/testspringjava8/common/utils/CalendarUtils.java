@@ -56,7 +56,6 @@ public class CalendarUtils {
             date = DateUtils.parseDate(strDate, pattern);
         } catch (Exception ex) {
             log.warn("Unable to parse date \"{}\" with pattern \"{}\"", strDate, pattern);
-//            throw new ValidationException(DokupayMsgCode.UNKNOWN);
         }
         return date;
     }
