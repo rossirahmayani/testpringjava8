@@ -37,4 +37,28 @@ public class ValidationService {
                 .filter(department -> department.getStatus().equals(Status.ACTIVE.getCode()))
                 .orElseThrow(() -> new ValidationException(ResponseCode.DEPARTMENT_NOT_FOUND));
     }
+
+    public void validateWordSHA1(String clientWords, String ...elements){
+        String elementBuild = encryptUtils.getElementWords(elements);
+        String words = encryptUtils.generateWordSHA1(elementBuild);
+        Optional.ofNullable(words)
+                .filter(value -> !value.equalsIgnoreCase(clientWords))
+                .ifPresent(value -> wordException(elementBuild, value, clientWords));
+    }
+
+    public void validateWordHMACSHA256(String clientWords, String key, String ...elements){
+        String elementBuild = encryptUtils.getElementWords(elements);
+        String words = encryptUtils.generateWordHMACSHA256(elementBuild, key);
+        Optional.ofNullable(words)
+                .filter(value -> !value.equalsIgnoreCase(clientWords))
+                .ifPresent(value -> wordException(elementBuild, value, clientWords));
+    }
+
+    private void wordException(String element, String words, String clientWords){
+        log.error("Invalid words");
+        log.debug("wordsElements   [{}]", element);
+        log.debug("words           [{}]", words);
+        log.debug("clientWords     [{}]", clientWords);
+        throw new ValidationException(ResponseCode.INVALID_WORDS);
+    }
 }
