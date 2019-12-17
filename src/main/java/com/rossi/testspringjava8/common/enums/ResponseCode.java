@@ -1,5 +1,6 @@
 package com.rossi.testspringjava8.common.enums;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -9,6 +10,7 @@ import java.util.stream.Stream;
 
 @Getter
 @ToString
+@AllArgsConstructor
 public enum  ResponseCode {
     SUCCESS("0000", "Success"),
     INSUFFICIENT_PARAMS("0001", "Insufficient params"),
@@ -21,11 +23,6 @@ public enum  ResponseCode {
 
     private String code;
     private String msg;
-
-    ResponseCode (String code, String msg){
-        this.code = code;
-        this.msg = msg;
-    }
 
     public static ResponseCode byCode(String code) {
         Predicate<ResponseCode> isEqual = responseCode -> Optional.ofNullable(responseCode)

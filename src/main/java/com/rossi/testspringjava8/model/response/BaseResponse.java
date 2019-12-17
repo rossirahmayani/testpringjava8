@@ -7,5 +7,4 @@ import lombok.Data;
 public class BaseResponse {
     private String responseCode;
     private String responseMsg;
-    private Object responseData;
 }
